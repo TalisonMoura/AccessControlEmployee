@@ -9,8 +9,7 @@ public class Address
     public int Number { get; set; }
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
     public DateTime ModifydAt { get; set; } = DateTime.Now;
-    public bool IsDeleted { get; private set; } = false;
+    public bool IsDeleted { get; private set; }
     public Guid EmployeeId { get; private set; }
-    public virtual Employee Employee { get; set; }
     protected Address() { }
 }

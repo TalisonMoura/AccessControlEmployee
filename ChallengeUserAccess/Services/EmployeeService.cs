@@ -11,9 +11,9 @@ namespace ChallengeUserAccess.Services;
 
 public class EmployeeService : IEmployeeService
 {
-    private readonly Repository _repository;
+    private readonly RepositoryDbContext _repository;
     private readonly IMapper _mapper;
-    public EmployeeService(Repository repository, IMapper mapper)
+    public EmployeeService(RepositoryDbContext repository, IMapper mapper, ITokenService tokenService)
     {
         _repository = repository;
         _mapper = mapper;

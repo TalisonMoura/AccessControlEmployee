@@ -11,9 +11,9 @@ namespace ChallengeUserAccess.Services;
 
 public class AddressService : IAddressService
 {
-    private readonly Repository _repository;
+    private readonly RepositoryDbContext _repository;
     private readonly IMapper _mapper;
-    public AddressService(Repository repository, IMapper mapper)
+    public AddressService(RepositoryDbContext repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;

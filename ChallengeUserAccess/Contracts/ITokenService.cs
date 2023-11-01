@@ -1,4 +1,5 @@
 ﻿using ChallengeUserAccess.Entities;
+using System.Security.Claims;
 
 namespace ChallengeUserAccess.Contracts;
 
