@@ -2,4 +2,6 @@
 
 public class DeleteAddressResponse
 {
+    public bool IsDeleted { get; private set; }
 }
+

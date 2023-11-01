@@ -39,7 +39,7 @@ public class AddressService : IAddressService
     public async Task<UpdateAddressResponse> UpdateAddressAsync(Guid id, JsonPatchDocument<UpdateAddressRequest> request)
     {
         if (request == null) throw new ArgumentNullException("Parameters cannot be null");
-        var address = await _repository.Address.FirstOrDefaultAsync(x => x.Id == id) ?? throw new ArgumentNullException("This Employee doesn't exist");
+        var address = await _repository.Address.FirstOrDefaultAsync(x => x.Id == id) ?? throw new ArgumentNullException("This Address doesn't exist");
         var addressUpdate = _mapper.Map<UpdateAddressRequest>(address);
         request.ApplyTo(addressUpdate);
 
@@ -49,9 +49,9 @@ public class AddressService : IAddressService
     }
     public async Task<DeleteAddressResponse> DeleteAdressAsync(Guid id)
     {
-        var employee = await _repository.Address.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("The Id doesn't exist in database");
-        _repository.Address.Remove(employee);
+        var address = await _repository.Address.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("The Id doesn't exist in database");
+        _repository.Address.Remove(address);
         await _repository.SaveChangesAsync();
-        return _mapper.Map<DeleteAddressResponse>(employee);
+        return _mapper.Map<DeleteAddressResponse>(address);
     }
 }

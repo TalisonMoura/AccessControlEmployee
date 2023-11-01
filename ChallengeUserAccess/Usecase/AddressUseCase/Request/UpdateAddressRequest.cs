@@ -1,6 +1,8 @@
-﻿namespace ChallengeUserAccess.Usecase.AddressUseCase.Request;
+﻿using System.Text.Json.Serialization;
 
-public class UpdateAddressRequest
+namespace ChallengeUserAccess.Usecase.AddressUseCase.Request;
+
+public class UpdateAddressRequest : CreateAddressRequest 
 {
-
+    [JsonIgnore] public DateTime ModifydAt { get; set; }
 }

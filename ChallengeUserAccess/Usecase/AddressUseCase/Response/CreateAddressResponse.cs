@@ -2,4 +2,6 @@
 
 public class CreateAddressResponse
 {
+    public Guid Id { get; set; }
+    public DateTime CreatedAt { get; private set; }
 }

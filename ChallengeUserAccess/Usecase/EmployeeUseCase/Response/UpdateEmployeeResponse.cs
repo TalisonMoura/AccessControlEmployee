@@ -1,5 +1,3 @@
 ﻿namespace ChallengeUserAccess.Usecase.EmployeeUseCase.Response;
 
-public class UpdateEmployeeResponse
-{
-}
+public class UpdateEmployeeResponse : SearchEmployeeResponse { }

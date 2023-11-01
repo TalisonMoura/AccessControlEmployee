@@ -2,4 +2,5 @@
 
 public class DeleteEmployeeResponse
 {
+    public bool IsDeleted { get; private set; }
 }
