@@ -6,6 +6,7 @@ using ChallengeUserAccess.Usecase.EmployeeUseCase.Request;
 using ChallengeUserAccess.Usecase.EmployeeUseCase.Response;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
+using ChallengeUserAccess.ExtensionFormat;
 
 namespace ChallengeUserAccess.Services;
 
@@ -29,21 +30,24 @@ public class EmployeeService : IEmployeeService
 
     public async Task<ICollection<SearchEmployeeResponse>> GetEmployeesAsync()
     {
-        var response = await _repository.Employees.ToListAsync();
+        var response = await _repository.Employees.Include(x => x.Address).ToListAsync();
         return _mapper.Map<ICollection<SearchEmployeeResponse>>(response);
     }
 
     public async Task<SearchEmployeeResponse> GetEmployeeByIdAsync(Guid id)
     {
-        var response = await _repository.Employees.FirstOrDefaultAsync(x => x.Id == id) ?? throw new ArgumentNullException("This Employee doesn't exist");
+        var response = await _repository.Employees.Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == id) 
+            ?? throw new ArgumentNullException("This Employee doesn't exist");
         return _mapper.Map<SearchEmployeeResponse>(response);
     }
 
     public async Task<UpdateEmployeeResponse> UpdateEmployeeAsync(Guid id,JsonPatchDocument<UpdateEmployeeRequest> request)
     {
         if (request == null) throw new ArgumentNullException("Parameters cannot be null");
-        var employee = await _repository.Employees.FirstOrDefaultAsync(x => x.Id == id) ?? throw new ArgumentNullException("This Employee doesn't exist");
+        var employee = await _repository.Employees.FirstOrDefaultAsync(x => x.Id == id) 
+            ?? throw new ArgumentNullException("This Employee doesn't exist");
         var employeeUpdate = _mapper.Map<UpdateEmployeeRequest>(employee);
+        employeeUpdate.ModifydAt = DateTime.UtcNow;
         request.ApplyTo(employeeUpdate);
 
         var neWEmployee = _mapper.Map(employeeUpdate, employee);
@@ -52,7 +56,8 @@ public class EmployeeService : IEmployeeService
     }
     public async Task<DeleteEmployeeResponse> DeleteEmployeeAsync(Guid id)
     {
-        var employee = await _repository.Employees.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("The Id doesn't exist in database");
+        var employee = await _repository.Employees.FirstOrDefaultAsync(x => x.Id == id) 
+            ?? throw new Exception("The Id doesn't exist in database");
         _repository.Employees.Remove(employee);
         await _repository.SaveChangesAsync();
         return _mapper.Map<DeleteEmployeeResponse>(employee);

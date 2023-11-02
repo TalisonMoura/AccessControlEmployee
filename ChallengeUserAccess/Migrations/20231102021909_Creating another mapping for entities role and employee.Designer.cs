@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChallengeUserAccess.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    [Migration("20231101043124_Creating relashionship among rules, address and employee")]
-    partial class Creatingrelashionshipamongrulesaddressandemployee
+    [Migration("20231102021909_Creating another mapping for entities role and employee")]
+    partial class Creatinganothermappingforentitiesroleandemployee
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,17 +35,8 @@ namespace ChallengeUserAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("ModifydAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("Number")
                         .HasColumnType("int");
@@ -83,7 +74,7 @@ namespace ChallengeUserAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsAdmin")
+                    b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
@@ -128,22 +119,9 @@ namespace ChallengeUserAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployeeId");
+
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("EmployeeRole", b =>
-                {
-                    b.Property<Guid>("EmployeesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("EmployeesId", "RolesId");
-
-                    b.HasIndex("RolesId");
-
-                    b.ToTable("EmployeeRole");
                 });
 
             modelBuilder.Entity("ChallengeUserAccess.Entities.Address", b =>
@@ -155,17 +133,11 @@ namespace ChallengeUserAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EmployeeRole", b =>
+            modelBuilder.Entity("ChallengeUserAccess.Entities.Role", b =>
                 {
                     b.HasOne("ChallengeUserAccess.Entities.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ChallengeUserAccess.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
+                        .WithMany("Roles")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -174,6 +146,8 @@ namespace ChallengeUserAccess.Migrations
                 {
                     b.Navigation("Address")
                         .IsRequired();
+
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

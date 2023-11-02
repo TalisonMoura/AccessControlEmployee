@@ -1,5 +1,4 @@
-﻿using ChallengeUserAccess.Entities;
-using ChallengeUserAccess.Usecase.AddressUseCase.Request;
+﻿using ChallengeUserAccess.Usecase.AddressUseCase.Request;
 using ChallengeUserAccess.Usecase.AddressUseCase.Response;
 using Microsoft.AspNetCore.JsonPatch;
 

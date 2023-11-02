@@ -6,4 +6,5 @@ public class CreateAddressRequest
     public string City { get; set; }
     public string Patio { get; set; }
     public int Number { get; set; }
+    public Guid EmployeeId { get; set; }
 }
