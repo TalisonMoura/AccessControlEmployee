@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace ChallengeUserAccess.Controllers;
 
-[ApiController]
+
 [Route("/Employee")]
 [Authorize(Roles = "admin")]
 public class EmployeeController : MainController
