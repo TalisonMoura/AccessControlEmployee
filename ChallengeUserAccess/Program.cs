@@ -1,6 +1,7 @@
 using ChallengeUserAccess.Contracts;
 using ChallengeUserAccess.Data;
 using ChallengeUserAccess.Services;
+using ChallengeUserAccess.Validations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -79,6 +80,7 @@ builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddScoped<IEmployeeValidation, EmployeeValidation>();
 
 var app = builder.Build();
 

@@ -40,4 +40,10 @@ public static class StringExtension
         Regex reg = new(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$");
         return reg.IsMatch(str);
     }
+
+    public static bool PhoneNumberValidate(this string str)
+    {
+        Regex reg = new(@"\d{11}");
+        return reg.IsMatch(str);
+    }
 }

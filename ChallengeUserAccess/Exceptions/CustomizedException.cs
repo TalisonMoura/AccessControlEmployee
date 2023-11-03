@@ -1,5 +1,6 @@
 ﻿namespace ChallengeUserAccess.Exceptions;
 
-public class CustomizedException
+public class CustomizedException : Exception
 {
+    public CustomizedException(string opt) : base(opt) { }
 }
