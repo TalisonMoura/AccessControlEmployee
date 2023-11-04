@@ -6,8 +6,6 @@ using ChallengeUserAccess.Usecase.EmployeeUseCase.Request;
 using ChallengeUserAccess.Usecase.EmployeeUseCase.Response;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
-using ChallengeUserAccess.ExtensionFormat;
-using ChallengeUserAccess.Validations;
 using ChallengeUserAccess.Exceptions;
 
 namespace ChallengeUserAccess.Services;
@@ -41,14 +39,14 @@ public class EmployeeService : IEmployeeService
     public async Task<SearchEmployeeResponse> GetEmployeeByIdAsync(Guid id)
     {
         var response = await _repository.Employees.Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == id) 
-            ?? throw new NullException();
+            ?? throw new InvalidObjectException("This profile does not exist");
         return _mapper.Map<SearchEmployeeResponse>(response);
     }
 
     public async Task<UpdateEmployeeResponse> UpdateEmployeeAsync(Guid id,JsonPatchDocument<UpdateEmployeeRequest> request)
     {
         var employee = await _repository.Employees.FirstOrDefaultAsync(x => x.Id == id) 
-            ?? throw new NullException();
+            ?? throw new InvalidObjectException("This profile does not exist");
         var employeeUpdate = _mapper.Map<UpdateEmployeeRequest>(employee);
         employeeUpdate = _validation.EmpUpdateValidate(employeeUpdate);
         employeeUpdate.ModifydAt = DateTime.UtcNow;
@@ -62,7 +60,7 @@ public class EmployeeService : IEmployeeService
     public async Task<DeleteEmployeeResponse> DeleteEmployeeAsync(Guid id)
     {
         var employee = await _repository.Employees.FirstOrDefaultAsync(x => x.Id == id) 
-            ?? throw new NullException();
+            ?? throw new InvalidObjectException("This profile does not exist");
         _repository.Employees.Remove(employee);
         await _repository.SaveChangesAsync();
         return _mapper.Map<DeleteEmployeeResponse>(employee);

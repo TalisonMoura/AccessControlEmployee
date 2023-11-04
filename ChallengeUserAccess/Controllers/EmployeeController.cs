@@ -11,7 +11,6 @@ namespace ChallengeUserAccess.Controllers;
 
 
 [Route("/Employee")]
-[Authorize(Roles = "admin")]
 public class EmployeeController : MainController
 {
     private readonly IEmployeeService _employeeService;
@@ -21,6 +20,7 @@ public class EmployeeController : MainController
     }
 
     [HttpPost("Create")]
+    [Authorize(Roles = "admin")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateEmployeeResponse))]
     public async Task<IActionResult> CreateEmployeeAsync(CreateEmployeeRequest request)
     {
@@ -45,6 +45,7 @@ public class EmployeeController : MainController
     }
 
     [HttpPatch("{id}")]
+    [Authorize(Roles = "admin")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UpdateEmployeeResponse))]
     public async Task<IActionResult> UpdateEmployeeAsync(Guid id, JsonPatchDocument<UpdateEmployeeRequest> request)
     {
@@ -53,6 +54,7 @@ public class EmployeeController : MainController
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "admin")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(DeleteEmployeeResponse))]
     public async Task<IActionResult> DeleteClient(Guid id)
     {

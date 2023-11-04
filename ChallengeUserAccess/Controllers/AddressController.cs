@@ -10,7 +10,6 @@ using System.Collections;
 namespace ChallengeUserAccess.Controllers;
 
 [Route("/Address")]
-[Authorize(Roles = "admin")]
 public class AddressController : MainController
 {
     private readonly IAddressService _addressService;
@@ -38,13 +37,14 @@ public class AddressController : MainController
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchAddresResponse))]
-    public async Task<IActionResult> FindClientById(Guid id)
+    public async Task<IActionResult> FindAddressById(Guid id)
     {
         var response = await _addressService.GetAddressByIdAsync(id);
         return Ok(response);
     }
 
     [HttpPatch("{id}")]
+    [Authorize(Roles = "admin")]
     [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(UpdateAddressResponse))]
     public async Task<IActionResult> UpdateAddress(Guid id, JsonPatchDocument<UpdateAddressRequest> request)
     {
@@ -53,6 +53,7 @@ public class AddressController : MainController
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> DeleteAddress(Guid id)
     {
         var response = await _addressService.DeleteAdressAsync(id);
