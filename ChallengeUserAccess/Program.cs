@@ -10,15 +10,16 @@ using System.Text;
 using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
+
 Env.Load();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo 
-    { 
-        Title = "Employee Control Access", 
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Employee Control Access",
         Version = "v1",
         Description = "This is a basic control access for employee and manager",
         Contact = new OpenApiContact
@@ -40,10 +41,10 @@ builder.Services.AddSwaggerGen(c =>
         {
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference 
-                {   
-                    Type = ReferenceType.SecurityScheme, 
-                    Id = "Bearer" 
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
                 }
             },
             new string[] { }
@@ -55,9 +56,9 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
-builder.Services.AddDbContext<RepositoryDbContext>(opts => 
+builder.Services.AddDbContext<RepositoryDbContext>(opts =>
     opts.UseSqlServer(Env.GetString("DataBaseConnection")));
-                                   
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -86,7 +87,6 @@ builder.Services.AddScoped<IEmployeeValidation, EmployeeValidation>();
 builder.Services.AddScoped<ILoginValidation, LoginValidation>();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
