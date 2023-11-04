@@ -26,7 +26,7 @@ public class TokenService : ITokenService
         {
             Subject = employee.GenerateClaims(),
             SigningCredentials = credential,
-            Expires = DateTime.UtcNow.AddHours(5),
+            Expires = DateTime.UtcNow.AddHours(2),
         };
         var token = handler.CreateToken(tokenDescriptor);
 

@@ -1,8 +1,7 @@
 ﻿namespace ChallengeUserAccess.Exceptions
 {
-    public class InvalidObjectException : CustomizedException
+    public class InvalidObjectException : ApplicationException
     {
-        const string message = "This is not a valid object value";
-        public InvalidObjectException(string opt = message) : base(opt) { }
+        public InvalidObjectException(string opt) : base(opt) { }
     }
 }

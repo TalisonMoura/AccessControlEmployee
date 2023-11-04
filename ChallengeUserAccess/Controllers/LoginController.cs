@@ -2,10 +2,12 @@
 using ChallengeUserAccess.Controllers.Base;
 using ChallengeUserAccess.Usecase.EmployeeUseCase.Request;
 using ChallengeUserAccess.Usecase.EmployeeUseCase.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChallengeUserAccess.Controllers;
 
+[ApiController]
 [Route("/Login")]
 public class LoginController : MainController
 {

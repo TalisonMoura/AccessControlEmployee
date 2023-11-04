@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
+Env.Load();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
@@ -53,9 +55,9 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
-var connectionString = builder.Configuration["ConnectionStrings:DataBaseConnection"];
-builder.Services.AddDbContext<RepositoryDbContext>(opts => opts.UseSqlServer(connectionString));
-
+builder.Services.AddDbContext<RepositoryDbContext>(opts => 
+    opts.UseSqlServer(Env.GetString("DataBaseConnection")));
+                                   
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -67,7 +69,7 @@ builder.Services.AddAuthentication(x =>
     x.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["SymmetricSecurityKey"])),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.GetString("SymmetricSecurityKey"))),
         ValidateAudience = false,
         ValidateIssuer = false
     };
@@ -81,6 +83,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IEmployeeValidation, EmployeeValidation>();
+builder.Services.AddScoped<ILoginValidation, LoginValidation>();
 
 var app = builder.Build();
 

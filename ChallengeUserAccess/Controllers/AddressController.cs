@@ -9,6 +9,7 @@ using System.Collections;
 
 namespace ChallengeUserAccess.Controllers;
 
+[ApiController]
 [Route("/Address")]
 [Authorize(Roles = "admin")]
 public class AddressController : MainController
