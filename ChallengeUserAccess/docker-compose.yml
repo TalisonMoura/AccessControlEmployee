@@ -1,27 +1,17 @@
-version: '3.9'
+version: '3.4'
 services:
-  challengeuseraccess:
-    image: ${DOCKER_REGISTRY-}challengeuseraccess
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - 8000:80
-      - :80
-    depends_on:
-      - sqldata
-    volumes:
-      - keyvolume:/root/.aspnet/DataProtection-Keys
-
   sqldata:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      - SA_PASSWORD=tjm12345*
-      - ACCEPT_EULA=Y
-    volumes:
-        - T:\ProjetosEstudo\ProjetosC#\SqlDockerData:/var/opt/mssql/data
+    image: postgres:latest
+    container_name: sqldata_db
     ports:
-      - "1450:1433"
+    - 2222:5432
+    environment:
+    - POSTGRES_USERNAME=challenge
+    - POSTGRES_PASSWORD=challenge
+    - POSTGRES_DATABASE=Employee_Db
+    restart: always
+    volumes:   
+    - keyvolume:/var/lib/postgresql/data
 
 volumes:
   keyvolume:

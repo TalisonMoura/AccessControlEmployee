@@ -1,10 +1,14 @@
-﻿using Swashbuckle.AspNetCore.Annotations;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ChallengeUserAccess.Usecase.EmployeeUseCase.Request;
 
 public class CreateEmployeeRequest
 {
+    [Required]
+    [MinLength(11)]
+    [MaxLength(11)]
+    public string Cpf { get; set; }
+
     [Required]
     [MinLength(10)]
     [MaxLength(50)]
