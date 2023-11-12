@@ -55,9 +55,8 @@ builder.Services.AddSwaggerGen(c =>
     //c.IncludeXmlComments(xmlPath);
 });
 
-
 builder.Services.AddDbContext<RepositoryDbContext>(opts =>
-    opts.UseSqlServer(Env.GetString("DataBaseConnection")));
+    opts.UseNpgsql(Env.GetString("DataBaseConnection")));
 
 builder.Services.AddAuthentication(x =>
 {
@@ -78,11 +77,15 @@ builder.Services.AddAuthentication(x =>
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+// Token Injection
+builder.Services.AddTransient<ITokenService, TokenService>();
+
 // Services Injection
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddTransient<ITokenService, TokenService>();
+
+// Validation Services
 builder.Services.AddScoped<IEmployeeValidation, EmployeeValidation>();
 builder.Services.AddScoped<ILoginValidation, LoginValidation>();
 
