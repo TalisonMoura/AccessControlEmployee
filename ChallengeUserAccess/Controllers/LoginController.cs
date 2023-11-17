@@ -16,9 +16,9 @@ public class LoginController : MainController
     }
 
     /// <summary>
-    /// 
+    /// This is a function to authenticate the employee
     /// </summary>
-    /// <param name="request"></param>
+    /// <param name="request">The requirements fields to get authenticated</param>
     /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RegisterLoginEmployeeResponse))]

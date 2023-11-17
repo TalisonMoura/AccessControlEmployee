@@ -1,5 +1,7 @@
 ﻿namespace ChallengeUserAccess.Entities;
-
+/// <summary>
+/// This is an entiti who represents the Employee atributes
+/// </summary>
 public class Employee
 {
     public Guid Id { get; private set; }

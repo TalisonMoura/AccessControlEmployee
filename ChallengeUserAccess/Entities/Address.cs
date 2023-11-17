@@ -1,5 +1,7 @@
 ﻿namespace ChallengeUserAccess.Entities;
-
+/// <summary>
+/// This is an entiti who represents the Address atributes
+/// </summary>
 public class Address
 {
     public Guid Id { get; set; }
